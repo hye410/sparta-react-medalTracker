@@ -1,9 +1,15 @@
 import React from 'react'
 
 
-const Button = () => {
+const Button = ({name, type, customStyle = null, handleOnClick = null}) => {
   return (
-    <button>추가</button>
+    <button 
+      type={type ?? "button"}
+      style={customStyle}
+      onClick={handleOnClick}
+    >
+      {name}
+    </button>
   )
 }
 

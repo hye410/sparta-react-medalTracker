@@ -118,3 +118,7 @@ header {
       padding : 10px 0;
    }
 
+.noData {
+  text-align: center;
+  margin-top : 80px;
+}

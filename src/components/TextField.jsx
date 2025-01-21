@@ -1,11 +1,15 @@
 import React from 'react'
 
 
-const TextField = () => {
+const TextField = ({id,title,type,value,handleOnChange}) => {
   return (
     <p>
-     <label>국가명</label>
-    <input type="text"  onChange={(e) => handleSubmit(e)}/>
+     <label>{title}</label>
+     <input 
+      type={type}  
+      value={value}
+      onChange={(e) => handleOnChange(e,id)}
+     />
     </p>
 
   )
