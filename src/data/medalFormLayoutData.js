@@ -43,6 +43,7 @@ export const buttonData = (clickFunc) => [
   },
   {
     buttonName : "업데이트",
-    type : "submit"
+    clickEvent : clickFunc,
+    value : "update"
   }
 ]

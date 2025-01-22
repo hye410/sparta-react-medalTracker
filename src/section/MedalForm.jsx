@@ -1,46 +1,70 @@
 import React, {useState,useMemo, useCallback} from 'react'
 import TextField from '../components/TextField';
 import Button from '../components/Button';
-import { inputData,buttonData } from '../data/SearchFieldLayoutData';
+import { inputData,buttonData } from '../data/medalFormLayoutData';
 import { getLabel } from '../utils/getLabelName';
 import { removeAllBlank, getTrimmedText } from '../utils/getTrimmedString';
 
-const initData = {
+const INIT_DATA = {
   country : '',
   gold : 0,
   silver : 0,
   bronze : 0
 }
 
-const MedalForm = ({setMedalList}) => {
-  const [formData, setFormData] = useState(initData)
+const MedalForm = ({
+  medalList,
+  setMedalList
+}) => {
+  const [formData, setFormData] = useState(INIT_DATA);
 
-  const checkAvaliableData = () => {
-    let invalidValue = [];
-    for( const [key,value] of Object.entries(formData)) {
-      if(!value || !removeAllBlank(value)) invalidValue.push(getLabel(key));
-    }
-  
-    if(invalidValue.length !== 0) alert(`${invalidValue.join(',')}을 입력해 주세요.`)
+  const createMedalList = () => {
+    setMedalList((prev) => (
+      [...prev, {...formData, country : getTrimmedText(formData.country), id : crypto.randomUUID()}]
+    ));
+    setFormData(INIT_DATA);
+  };
+
+  const updateMedalList = () => {
+    const { country, gold, silver, bronze } = formData;
+
+    const newMedalList = medalList.map((list) => 
+      list.country === country ? 
+      {...list, gold, silver, bronze} 
+      : list
+    );
+
+    setMedalList(newMedalList);
+    setFormData(INIT_DATA);
+  };
+
+  const checkValidation = (type) => {
+    const medals = {...formData};
+    delete medals.country;
+    if(removeAllBlank(formData.country).length === 0) return alert('국가명을 입력해 주세요.');
+    if(Object.values(medals).every(number => !number)) return alert('모든 메달의 개수가 0일  수 없습니다.');
     else {
-      alert('오키!!!');
-      setMedalList((prev) => ([...prev, {...formData, country : getTrimmedText(formData.country), id : crypto.randomUUID()}]));
-      setFormData(initData);
+      alert(`${type === 'update' ? '수정이' : '추가가'} 완료되었습니다.`);
+      type === 'create' ? createMedalList() : updateMedalList();
     }
-  }
+  };
 
   const handleOnSubmit = (e) =>{
     e.preventDefault();
-    checkAvaliableData();
-  }
+    checkValidation('create');
+  };
+
+  const handleOnUpdate = (e) => {
+    checkValidation('update');
+  }; 
 
   const handleOnChange = useCallback((event,id) => {
     const { value } = event.target;
     setFormData((prev) => ({...prev,[id]:value}))
-  },[])
+  },[]);
 
-  const searchInputData = useMemo(() => inputData(formData,handleOnChange),[formData])
-  const eventButtonData = buttonData(handleOnSubmit)
+  const searchInputData = useMemo(() => inputData(formData,handleOnChange),[formData]);
+  const eventButtonData = buttonData(handleOnUpdate);
 
   return (
     <form className="medalForm" onSubmit={handleOnSubmit}>
@@ -57,12 +81,14 @@ const MedalForm = ({setMedalList}) => {
         />))
       }
       {
-        eventButtonData.map(({buttonName, type, customeStyle}) =>(
+        eventButtonData.map(({buttonName, type, value, clickEvent , customeStyle}) =>(
           <Button
             key={`${buttonName}_button`}
             name={buttonName}
             type={type}
+            value={value}
             customStyle={customeStyle}
+            handleOnClick={clickEvent}
           />
         ))
       }
@@ -70,4 +96,4 @@ const MedalForm = ({setMedalList}) => {
   )
 }
 
-export default MedalForm
+export default MedalForm;
