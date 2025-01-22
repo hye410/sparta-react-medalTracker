@@ -1,13 +1,16 @@
+import { INPUT_VALUES } from "../constant/constant";
+
+const { COUNTRY,GOLD,SILVER,BRONZE } = INPUT_VALUES;
 export const getLabel = (key) => {
   switch (key) {
-    case 'country' :
-      return '국가명';
-    case 'gold' :
-      return '금메달';
-    case 'silver' :
-      return '은메달';
-    case 'bronze' :
-      return '동메달';
+    case COUNTRY.value :
+      return COUNTRY.name;
+    case GOLD.value :
+      return GOLD.name;
+    case SILVER.value :
+      return SILVER.name;
+    case BRONZE.value :
+      return BRONZE.name;
     default :
       return '';
   }

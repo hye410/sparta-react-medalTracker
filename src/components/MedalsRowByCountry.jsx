@@ -1,6 +1,10 @@
 import React from 'react'
 import Button from './Button';
 import { setLocalStorage } from '../utils/handleLocalStorage';
+import { INPUT_VALUES, LOCAL_MEDAL_LIST_KEY } from '../constant/constant';
+
+
+const { COUNTRY, GOLD, SILVER, BRONZE } = INPUT_VALUES;
 
 const buttonStyle = {
   backgroundColor : 'red',
@@ -17,15 +21,18 @@ const MedalsRowByCountry = ({rows, setNewRows}) => {
     const { value } = event.target;
     const newRows = rows.filter(row => row.id !== value);
     setNewRows(newRows);
-    setLocalStorage('olympic',newRows);
+    setLocalStorage(LOCAL_MEDAL_LIST_KEY,newRows);
   }
+
+  rows.forEach(row => row['sum'] = Number(row[GOLD.value]) + Number(row[SILVER.value]) + Number(row[BRONZE.value]));
 
   return rows.map((row,index) => (
         <tr key={`medalTableRow_${index}`} className={index % 2 === 0 ? "even" : "odd"}>
-        <td>{row.country}</td>
-        <td>{row.gold}</td>
-        <td>{row.silver}</td>
-        <td>{row.bronze}</td>
+        <td>{row[COUNTRY.value]}</td>
+        <td>{row[GOLD.value]}</td>
+        <td>{row[SILVER.value]}</td>
+        <td>{row[BRONZE.value]}</td>
+        <td>{row.sum}</td>
         <td>
           <Button
             customStyle={buttonStyle}

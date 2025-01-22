@@ -15,6 +15,10 @@ header {
   margin-bottom : 3vh;
   }
 
+  h1{
+    color : rgb(0,52,127)
+  }
+
   #medalPage {
     width: 100%;
     max-width : 1200px;  

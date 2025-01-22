@@ -1,30 +1,34 @@
+import { INPUT_VALUES } from "../constant/constant";
+
+const { COUNTRY, GOLD, SILVER, BRONZE } = INPUT_VALUES;
+
 export const inputData = (data,changeFunc) => [
   {
-    id : "country",
-    title: "국가명",
+    id : COUNTRY.value,
+    title: COUNTRY.name,
     type : "text",
     value : data.country,
     changeFunc: changeFunc
   },
   {
-    id : "gold",
-    title: "금메달",
+    id : GOLD.value,
+    title: GOLD.name,
     type : "number",
     value : data.gold,
     minimumValue : 0,
     changeFunc: changeFunc
   },
   {
-    id : "silver",
-    title: "은메달",
+    id : SILVER.value,
+    title: SILVER.name,
     type : "number",
     value : data.silver,
     minimumValue : 0,
     changeFunc: changeFunc
   },
   {
-    id : "bronze",
-    title: "동메달",
+    id : BRONZE.value,
+    title: BRONZE.name,
     type : "number",
     value : data.bronze,
     minimumValue : 0,

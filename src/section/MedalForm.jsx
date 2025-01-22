@@ -2,66 +2,61 @@ import React, {useState,useMemo, useCallback} from 'react'
 import TextField from '../components/TextField';
 import Button from '../components/Button';
 import { inputData,buttonData } from '../data/medalFormLayoutData';
-import { removeAllBlank, getTrimmedText } from '../utils/getTrimmedString';
+import { getTrimmedText } from '../utils/getTrimmedString';
 import { setLocalStorage } from '../utils/handleLocalStorage.js';
+import { checkMedalValidation, checkCountryNameValidation } from '../utils/checkValidation.js';
+import { INIT_FORM_DATA, EVENT_TYPE, LOCAL_MEDAL_LIST_KEY } from '../constant/constant.js';
 
+const { CREATE, UPDATE } = EVENT_TYPE;
 
-const INIT_DATA = {
-  country : '',
-  gold : 0,
-  silver : 0,
-  bronze : 0
-}
-
-const MedalForm = ({
-  medalList,
-  setMedalList
-}) => {
-  const [formData, setFormData] = useState(INIT_DATA);
-
+const MedalForm = ({medalList,setMedalList}) => {
+  const [formData, setFormData] = useState(INIT_FORM_DATA); // 사용자가 입력한 input data를 받음
+  
+  // 메달 리스트를 생성하는 함수
   const createMedalList = () => {
     const { country } = formData;
-    const hasMedalList = medalList.findIndex((list) => list.country === country) !== -1 ;
-    if(hasMedalList) return alert('이미 추가된 국가입니다.');
-    const newMedalList = [...medalList, {...formData,  country : getTrimmedText(formData.country), id : crypto.randomUUID()}]
-    setMedalList(newMedalList);
-    setLocalStorage('olympic',newMedalList);
-    alert('추가가 완료되었습니다.')
-    setFormData(INIT_DATA);
+      const newMedalList = [...medalList, {...formData,  country : getTrimmedText(country), id : crypto.randomUUID() ?? new Date().getTime()}];
+      setMedalList(newMedalList);
+      setLocalStorage(LOCAL_MEDAL_LIST_KEY,newMedalList);
+      alert('추가가 완료되었습니다.')
+      setFormData(INIT_FORM_DATA);
   };
 
   const updateMedalList = () => {
     const { country, gold, silver, bronze } = formData;
-    const hasNotMedalList = medalList.findIndex((list) => list.country === country) === -1 ;
-    if(hasNotMedalList) return alert(medalList.length === 0 ? '추가된 국가가 없습니다. 먼저 국가를 추가해 주세요.' : '해당 국가가 리스트에 없습니다.');
-    const newMedalList = medalList.map((list) => {
+      const newMedalList = medalList.map((list) => {
         if(list.country === country) return {...list, gold, silver, bronze};
         else return list;
       }
     );
-
     setMedalList(newMedalList);
-    setLocalStorage('olympic',newMedalList);
+    setLocalStorage(LOCAL_MEDAL_LIST_KEY,newMedalList);
     alert('수정이 완료되었습니다.');
-    setFormData(INIT_DATA);
+    setFormData(INIT_FORM_DATA);
   };
 
   const checkValidation = (type) => {
-    const medals = {...formData};
-    delete medals.country;
-    if(removeAllBlank(formData.country).length === 0) return alert('국가명을 입력해 주세요.');
-    if(Object.values(medals).every(number => !number)) return alert('모든 메달의 개수가 0일 수 없습니다.');
-    else type === 'create' ? createMedalList() : updateMedalList();
+    // 국가명에 대한 유효성 검사
+    const { isValid : isValidName , errorMessage : nameErrorMsg } = checkCountryNameValidation(medalList, formData, type);
+    if(!isValidName) return alert(nameErrorMsg);
     
+    // 메달에 대한 유효성 검사
+    const medals = {...formData};
+    delete medals.country;   
+    const { isValid, errorMessage } = checkMedalValidation(medals);
+    if(!isValid) return alert(errorMessage); 
+    
+    // 유효성 검사 통과 시 타입에 따른 함수 실행
+    if(isValidName && isValid) type === CREATE ? createMedalList() : updateMedalList();
   };
 
   const handleOnSubmit = (e) =>{
     e.preventDefault();
-    checkValidation('create');
+    checkValidation(CREATE);
   };
 
   const handleOnUpdate = (e) => {
-    checkValidation('update');
+    checkValidation(UPDATE);
   }; 
 
   const handleOnChange = useCallback((event,id) => {

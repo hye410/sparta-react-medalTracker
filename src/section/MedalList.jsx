@@ -1,25 +1,31 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Table from '../components/Table';
-import { tableHead } from '../data/medalListLayoutData';
 import MedalsRowByCountry from '../components/MedalsRowByCountry';
 import Sorting from '../components/Sorting';
+import { INPUT_VALUES } from '../constant/constant';
+import { tableHead } from '../data/MedalListLayoutData';
+const { GOLD, SILVER, BRONZE, COUNTRY } = INPUT_VALUES;
 
 const sortingData = [
   {
-    text : '국가명 순',
-    value : 'country'
+    text : `${COUNTRY.name} 순`,
+    value : COUNTRY.value
   },
   {
-    text : '금메달 순',
-    value : 'gold'
+    text : `${GOLD.name} 순`,
+    value : GOLD.value
   },
   {
-    text : '은메달 순',
-    value : 'silver'
+    text : `${SILVER.name} 순`,
+    value : SILVER.value
   },
   {
-    text : '동메달 순',
-    value : 'bronze'
+    text : `${BRONZE.name} 순`,
+    value : BRONZE.value
+  },
+  {
+    text : '총 합계 순',
+    value : 'sum'
   }
 ]
 

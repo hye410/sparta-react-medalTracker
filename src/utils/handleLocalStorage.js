@@ -1,5 +1,6 @@
-export const getLocalStorage = () => {
-  const storageData = localStorage.getItem('olympic');
+
+export const getLocalStorage = (key) => {
+  const storageData = localStorage.getItem(key);
   return JSON.parse(storageData) ?? new Array();
 }
 
