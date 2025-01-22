@@ -1,7 +1,7 @@
 import { INPUT_VALUES } from "../constant/constant";
 
 const { COUNTRY,GOLD,SILVER,BRONZE } = INPUT_VALUES;
-export const getLabel = (key) => {
+export const getLabelName = (key) => {
   switch (key) {
     case COUNTRY.value :
       return COUNTRY.name;

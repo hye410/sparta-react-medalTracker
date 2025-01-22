@@ -1,14 +1,21 @@
 import React from 'react'
 
 
-const TextField = ({id,title,type,value,minimum,handleOnChange}) => {
+const TextField = ({
+  id,
+  title = null,
+  type = 'text',
+  value,
+  minimum = null,
+  handleOnChange
+}) => {
   return (
     <p>
-     <label>{title}</label>
+    {title && <label>{title}</label>}
      <input 
       type={type}  
       value={value}
-      min={minimum ?? null}
+      min={minimum}
       onChange={(e) => handleOnChange(e,id)}
      />
     </p>
