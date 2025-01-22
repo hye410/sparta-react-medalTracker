@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import MedalList from '../section/\bMedalList';
 import MedalForm from '../section/MedalForm';
+import { getLocalStorage } from '../utils/handleLocalStorage';
+const INIT_MEDAL_LIST = getLocalStorage();
 function App() {
-  const [medalList, setMedalList] = useState([]);
+  const [medalList, setMedalList] = useState(INIT_MEDAL_LIST);
   return (
     <article id="main">
       <header>

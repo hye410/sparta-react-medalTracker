@@ -3,6 +3,8 @@ import TextField from '../components/TextField';
 import Button from '../components/Button';
 import { inputData,buttonData } from '../data/medalFormLayoutData';
 import { removeAllBlank, getTrimmedText } from '../utils/getTrimmedString';
+import { setLocalStorage } from '../utils/handleLocalStorage.js';
+
 
 const INIT_DATA = {
   country : '',
@@ -21,9 +23,9 @@ const MedalForm = ({
     const { country } = formData;
     const hasMedalList = medalList.findIndex((list) => list.country === country) !== -1 ;
     if(hasMedalList) return alert('이미 추가된 국가입니다.');
-    setMedalList((prev) => (
-      [...prev, {...formData, country : getTrimmedText(formData.country), id : crypto.randomUUID()}]
-    ));
+    const newMedalList = [...medalList, {...formData,  country : getTrimmedText(formData.country), id : crypto.randomUUID()}]
+    setMedalList(newMedalList);
+    setLocalStorage('olympic',newMedalList);
     alert('추가가 완료되었습니다.')
     setFormData(INIT_DATA);
   };
@@ -31,8 +33,7 @@ const MedalForm = ({
   const updateMedalList = () => {
     const { country, gold, silver, bronze } = formData;
     const hasNotMedalList = medalList.findIndex((list) => list.country === country) === -1 ;
-    if(hasNotMedalList) return alert(medalList.length === 0 ? '추가된 국가가 없습니다. 먼저 국가를 추가해 주세요.' : '해당 국가가 리스트에 없습니다.')
-    
+    if(hasNotMedalList) return alert(medalList.length === 0 ? '추가된 국가가 없습니다. 먼저 국가를 추가해 주세요.' : '해당 국가가 리스트에 없습니다.');
     const newMedalList = medalList.map((list) => {
         if(list.country === country) return {...list, gold, silver, bronze};
         else return list;
@@ -40,6 +41,7 @@ const MedalForm = ({
     );
 
     setMedalList(newMedalList);
+    setLocalStorage('olympic',newMedalList);
     alert('수정이 완료되었습니다.');
     setFormData(INIT_DATA);
   };

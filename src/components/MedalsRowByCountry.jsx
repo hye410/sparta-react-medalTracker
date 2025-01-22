@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from './Button';
+import { setLocalStorage } from '../utils/handleLocalStorage';
 
 const buttonStyle = {
   backgroundColor : 'red',
@@ -16,6 +17,7 @@ const MedalsRowByCountry = ({rows, setNewRows}) => {
     const { value } = event.target;
     const newRows = rows.filter(row => row.id !== value);
     setNewRows(newRows);
+    setLocalStorage('olympic',newRows);
   }
 
   return rows.map((row,index) => (
