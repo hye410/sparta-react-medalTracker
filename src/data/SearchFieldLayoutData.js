@@ -11,6 +11,7 @@ export const inputData = (data,changeFunc) => [
     title: "금메달",
     type : "number",
     value : data.gold,
+    minimumValue : 0,
     changeFunc: changeFunc
   },
   {
@@ -18,6 +19,7 @@ export const inputData = (data,changeFunc) => [
     title: "은메달",
     type : "number",
     value : data.silver,
+    minimumValue : 0,
     changeFunc: changeFunc
   },
   {
@@ -25,6 +27,7 @@ export const inputData = (data,changeFunc) => [
     title: "동메달",
     type : "number",
     value : data.bronze,
+    minimumValue : 0,
     changeFunc: changeFunc
   },
 ];

@@ -3,7 +3,7 @@ import React from 'react'
 const MedalsRowByCountry = ({rows}) => {
   if(rows.length === 0 ) return;
   return rows.map((row,index) => (
-        <tr className={index % 2 === 0 ? "even" : "odd"}>
+        <tr key={`medalTableRow_${index}`} className={index % 2 === 0 ? "even" : "odd"}>
         <td>{row.country}</td>
         <td>{row.gold}</td>
         <td>{row.silver}</td>

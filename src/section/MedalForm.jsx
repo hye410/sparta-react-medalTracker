@@ -1,27 +1,31 @@
-import React, {useState} from 'react'
+import React, {useState,useMemo, useCallback} from 'react'
 import TextField from '../components/TextField';
 import Button from '../components/Button';
 import { inputData,buttonData } from '../data/SearchFieldLayoutData';
 import { getLabel } from '../utils/getLabelName';
+import { removeAllBlank, getTrimmedText } from '../utils/getTrimmedString';
 
-const SearchField = ({setMedalList}) => {
-  const [searchData, setSearchData] = useState({
-    country : '',
-    gold : 0,
-    silver : 0,
-    bronze : 0
-  })
+const initData = {
+  country : '',
+  gold : 0,
+  silver : 0,
+  bronze : 0
+}
+
+const MedalForm = ({setMedalList}) => {
+  const [formData, setFormData] = useState(initData)
 
   const checkAvaliableData = () => {
     let invalidValue = [];
-    for( const [key,value] of Object.entries(searchData)) {
-      if(!value) invalidValue.push(getLabel(key));
+    for( const [key,value] of Object.entries(formData)) {
+      if(!value || !removeAllBlank(value)) invalidValue.push(getLabel(key));
     }
   
     if(invalidValue.length !== 0) alert(`${invalidValue.join(',')}을 입력해 주세요.`)
     else {
       alert('오키!!!');
-      setMedalList((prev) => ([...prev, {...searchData, id : crypto.randomUUID()}]));
+      setMedalList((prev) => ([...prev, {...formData, country : getTrimmedText(formData.country), id : crypto.randomUUID()}]));
+      setFormData(initData);
     }
   }
 
@@ -30,16 +34,16 @@ const SearchField = ({setMedalList}) => {
     checkAvaliableData();
   }
 
-  const handleOnChange = (event,id) => {
+  const handleOnChange = useCallback((event,id) => {
     const { value } = event.target;
-    setSearchData((prev) => ({...prev,[id]:value}))
-  }
+    setFormData((prev) => ({...prev,[id]:value}))
+  },[])
 
-  const searchInputData = inputData(searchData,handleOnChange);
+  const searchInputData = useMemo(() => inputData(formData,handleOnChange),[formData])
   const eventButtonData = buttonData(handleOnSubmit)
 
   return (
-    <form className="searchField" onSubmit={handleOnSubmit}>
+    <form className="medalForm" onSubmit={handleOnSubmit}>
       {
         searchInputData.map((value) => (
         <TextField
@@ -48,6 +52,7 @@ const SearchField = ({setMedalList}) => {
           title={value.title}
           type={value.type}
           value={value.value}
+          minimum={value.minimumValue}
           handleOnChange={value.changeFunc}
         />))
       }
@@ -65,4 +70,4 @@ const SearchField = ({setMedalList}) => {
   )
 }
 
-export default SearchField
+export default MedalForm

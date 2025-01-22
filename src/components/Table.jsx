@@ -6,7 +6,7 @@ const Table = ({tableHead,tableRow}) => {
     <thead>
       <tr>
         {
-          tableHead.map((head) => <th>{head}</th>)
+          tableHead.map((head) => <th key={`tableHead_${head}`}>{head}</th>)
         }
       </tr>
     </thead>
