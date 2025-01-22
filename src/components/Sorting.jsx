@@ -1,13 +1,15 @@
 import React from 'react'
 
-const Sorting = () => {
+const Sorting = ({sort , handleSort}) => {
   return (
     <p className="sorting">
-    <select>
-      <option>국가명 순</option>
-      <option>금메달 순</option>
-      <option>은메달 순</option>
-      <option>동메달 순</option>
+    <select onChange={handleSort} defaultValue={sort[0].value}>
+      {
+        sort.map((data) => 
+        <option key={`option_${data.value}`} value={data.value}>
+          {data.text}
+        </option>)
+      }
     </select>
   </p>
   )

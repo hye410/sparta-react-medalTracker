@@ -3,7 +3,6 @@ body {
 }
 
 #main {
-  /* background-color : skyblue; */
   min-width: 500px;
   height : 100vh;
 }
@@ -92,6 +91,15 @@ header {
       }
   }
 
+  #medalList > .sorting {
+    text-align: right;
+  }
+
+  #medalList > .sorting select {
+    padding : 5px 10px;
+  
+  }
+
   #medalList > table {
     margin : 0 auto;
     width : 100%;
@@ -124,3 +132,4 @@ header {
   text-align: center;
   margin-top : 80px;
 }
+

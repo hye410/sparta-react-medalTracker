@@ -2,7 +2,6 @@ import React, {useState,useMemo, useCallback} from 'react'
 import TextField from '../components/TextField';
 import Button from '../components/Button';
 import { inputData,buttonData } from '../data/medalFormLayoutData';
-import { getLabel } from '../utils/getLabelName';
 import { removeAllBlank, getTrimmedText } from '../utils/getTrimmedString';
 
 const INIT_DATA = {
@@ -19,22 +18,29 @@ const MedalForm = ({
   const [formData, setFormData] = useState(INIT_DATA);
 
   const createMedalList = () => {
+    const { country } = formData;
+    const hasMedalList = medalList.findIndex((list) => list.country === country) !== -1 ;
+    if(hasMedalList) return alert('이미 추가된 국가입니다.');
     setMedalList((prev) => (
       [...prev, {...formData, country : getTrimmedText(formData.country), id : crypto.randomUUID()}]
     ));
+    alert('추가가 완료되었습니다.')
     setFormData(INIT_DATA);
   };
 
   const updateMedalList = () => {
     const { country, gold, silver, bronze } = formData;
-
-    const newMedalList = medalList.map((list) => 
-      list.country === country ? 
-      {...list, gold, silver, bronze} 
-      : list
+    const hasNotMedalList = medalList.findIndex((list) => list.country === country) === -1 ;
+    if(hasNotMedalList) return alert(medalList.length === 0 ? '추가된 국가가 없습니다. 먼저 국가를 추가해 주세요.' : '해당 국가가 리스트에 없습니다.')
+    
+    const newMedalList = medalList.map((list) => {
+        if(list.country === country) return {...list, gold, silver, bronze};
+        else return list;
+      }
     );
 
     setMedalList(newMedalList);
+    alert('수정이 완료되었습니다.');
     setFormData(INIT_DATA);
   };
 
@@ -42,11 +48,9 @@ const MedalForm = ({
     const medals = {...formData};
     delete medals.country;
     if(removeAllBlank(formData.country).length === 0) return alert('국가명을 입력해 주세요.');
-    if(Object.values(medals).every(number => !number)) return alert('모든 메달의 개수가 0일  수 없습니다.');
-    else {
-      alert(`${type === 'update' ? '수정이' : '추가가'} 완료되었습니다.`);
-      type === 'create' ? createMedalList() : updateMedalList();
-    }
+    if(Object.values(medals).every(number => !number)) return alert('모든 메달의 개수가 0일 수 없습니다.');
+    else type === 'create' ? createMedalList() : updateMedalList();
+    
   };
 
   const handleOnSubmit = (e) =>{
