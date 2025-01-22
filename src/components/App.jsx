@@ -9,11 +9,12 @@ const INIT_MEDAL_LIST = getLocalStorage(LOCAL_MEDAL_LIST_KEY);
 function App() {
   const [medalList, setMedalList] = useState(INIT_MEDAL_LIST); // 테이블 리스트로 초기값은 로컬 스토리지에 저장된 값을 사용함
   return (
+    <div id="container">
     <article id="main">
       <header>
         <h1>2024 파리 올림픽</h1>
       </header>
-      <section id="medalPage">
+      <section id="medalSection">
         {/* -------사용자 input 입력 영역-------- */}
         <MedalForm 
         medalList={medalList}
@@ -28,6 +29,7 @@ function App() {
     
       </section>
     </article>
+    </div>
   )
 }
 

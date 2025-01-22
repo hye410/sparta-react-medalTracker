@@ -2,32 +2,49 @@ body {
   margin :0;
 }
 
-#main {
-  min-width: 500px;
-  height : 100vh;
+#container {
+  background-color: rgb(244,244,250);
+  padding : 8vh 7vw;
 }
 
+/* --------------- main ---------------- */
+#main {
+  margin : 0 auto;
+  min-width: 500px;
+  max-width: 1440px;
+  height : 80vh;
+  padding : 2vh 2vw;
+  padding-bottom: 50px;
+  background-color: rgb(254,254,254);
+  overflow-y: scroll;
+  border-radius: 10px 20px;
+  box-shadow: 2px 5px 6px #d9d9d9
+}
 
+/* --------------- header ---------------- */
 header {
   /* background-color: green; */
-  padding : 3vh;
+  padding : 2vh;
   text-align : center;
   margin-bottom : 3vh;
   }
 
   h1{
-    color : rgb(0,52,127)
+    color : rgb(0,52,127);
+    font-size: 2rem; 
   }
 
-  #medalPage {
+  /* --------------- medalSection ---------------- */
+
+  #medalSection {
     width: 100%;
     max-width : 1200px;  
     min-width : 500px;
     margin : 0 auto; 
   }
 
+  /* --------------- medalForm (input 영역) ---------------- */
   .medalForm {
-    /* background-color : pink; */
     display : flex;
     align-items: center;
     justify-content : center;
@@ -73,27 +90,28 @@ header {
     .medalForm {
       display: block;
       text-align: center;
+      margin-bottom: 1vh;
     }
-      .medalForm > p {
-        /* background-color: aquamarine; */
-        width: 100%;
-        flex-direction: row;
-        margin-bottom : 15px;
-        justify-content: center;
-        align-items: center;
-      }
-      .medalForm > p > label {
-        margin-right :10px;
-        margin-bottom : 0;
-      }
-
-      .medalForm > p > input {
-        width: 80%;
-      }
-      .medalForm > button {
-        margin-top:2vh;
-      }
+    .medalForm > p {
+      width: 100%;
+      flex-direction: row;
+      margin-bottom : 15px;
+      justify-content: center;
+      align-items: center;
+    }
+    .medalForm > p > label {
+      margin-right :10px;
+      margin-bottom : 0;
+    }
+    .medalForm > p > input {
+      width: 80%;
+    }
+    .medalForm > button {
+      margin-top:2vh;
+    }
   }
+
+  /* --------------- medalList (테이블 영역) ---------------- */
 
   #medalList > .sorting {
     text-align: right;
@@ -101,7 +119,8 @@ header {
 
   #medalList > .sorting select {
     padding : 5px 10px;
-  
+    border : 1px solid #cbcbcb;
+    cursor: pointer;
   }
 
   #medalList > table {
@@ -109,6 +128,30 @@ header {
     width : 100%;
     text-align: center;
     border-spacing: 0;
+    border-radius: 13px 15px;
+    box-shadow: 2px 4px 3px #dadada;
+    /* border : 1px solid #000; */
+    overflow: hidden;
+  }
+
+  #medalList > table th {
+    padding : 10px;
+    width : 15%;
+  }
+
+  #medalList > table th:first-child {
+    padding : 10px;
+    width : 25%;
+  }
+
+  #medalList > table td {
+    padding : 10px;
+    width : 15%;
+  }
+
+  #medalList > table td:first-child {
+    padding : 10px;
+    width : 25%;
   }
 
   #medalList > table > thead > tr {
@@ -117,21 +160,16 @@ header {
   }
 
   #medalList > table > tbody> tr.odd {
-   background-color: rgb(228,229,249);
+    background-color: rgb(228,229,249);
   }
 
   #medalList > table > tbody> tr.even {
     background-color: rgb(244,244,250);
-   }
+  }
 
-   #medalList > table th {
-    padding : 10px 0;
- }
 
-   #medalList > table td {
-      padding : 10px 0;
-   }
 
+/* --------------- Empty ---------------- */
 .noData {
   text-align: center;
   margin-top : 80px;
