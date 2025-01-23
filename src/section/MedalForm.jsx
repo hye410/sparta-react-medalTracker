@@ -6,7 +6,6 @@ import { getTrimmedText } from '../utils/getTrimmedString';
 import { setLocalStorage } from '../utils/handleLocalStorage.js';
 import { checkMedalValidation, checkCountryNameValidation } from '../utils/checkValidation.js';
 import { INIT_FORM_DATA, EVENT_TYPE, LOCAL_MEDAL_LIST_KEY } from '../constant/constant.js';
-import { removeInvalidZero } from '../utils/removeInvalidZero.js';
 
 const { CREATE, UPDATE } = EVENT_TYPE;
 
@@ -20,7 +19,7 @@ const MedalForm = ({medalList,setMedalList}) => {
     alert(`${type === CREATE ? '추가가' : '수정이'} 완료되었습니다.`);
     setFormData(INIT_FORM_DATA);
   }
-  
+
   // 메달 리스트를 생성하는 함수
   const createMedalList = () => {
     const { country, gold, silver, bronze } = formData;
@@ -28,13 +27,14 @@ const MedalForm = ({medalList,setMedalList}) => {
     const parseFormData = {
       id : crypto.randomUUID() ?? new Date().getTime(),
       country : getTrimmedText(country),
-      gold : removeInvalidZero(gold),
-      silver : removeInvalidZero(silver),
-      bronze : removeInvalidZero(bronze)
+      gold : Number(gold),
+      silver : Number(silver),
+      bronze : Number(bronze)
     };
+
     const newMedalList = [...medalList, parseFormData];
 
-    handleMedalList(newMedalList,CREATE)
+    handleMedalList(newMedalList,CREATE);
   };
 
   // 메달 리스트를 업데이트(수정)하는 함수
@@ -42,9 +42,9 @@ const MedalForm = ({medalList,setMedalList}) => {
     const { country, gold, silver, bronze } = formData;
     
     const parseFormData = { 
-      gold : removeInvalidZero(gold),
-      silver : removeInvalidZero(silver),
-      bronze : removeInvalidZero(bronze)
+      gold : Number(gold),
+      silver : Number(silver),
+      bronze : Number(bronze)
     };
     
     const newMedalList = medalList.map((list) => 
@@ -55,25 +55,26 @@ const MedalForm = ({medalList,setMedalList}) => {
   };
 
   // 이벤트 동작 전 유효성 검사를 하는 함수
-  const checkValidation = (type) => {
+  const checkValidation = (eventType) => {
     // 국가명에 대한 유효성 검사
-    const { isValid : isValidName , errorMessage : nameErrorMsg } = checkCountryNameValidation(medalList, formData, type);
+    const { isValid : isValidName, errorMessage : nameErrorMsg } = checkCountryNameValidation(medalList, formData, eventType);
     if(!isValidName) return alert(nameErrorMsg);
     
     // 메달에 대한 유효성 검사
     const medals = {...formData};
     delete medals.country;   
-    const { isValid, errorMessage } = checkMedalValidation(medals);
-    if(!isValid) return alert(errorMessage); 
+    const { isValid : isValidMedal, errorMessage : medalErrorMsg } = checkMedalValidation(medals);
+    if(!isValidMedal) return alert(medalErrorMsg); 
     
     // 유효성 검사 통과 시 타입에 따른 함수 실행
-    if(isValidName && isValid) type === CREATE ? createMedalList() : updateMedalList();
+    if(isValidName && isValidMedal) eventType === CREATE ? createMedalList() : updateMedalList();
   };
+    
 
   // 버튼 클릭 시 동작하는 함수
   const handleOnSubmit = (e) =>{
-    const { value } = e.target;
     e.preventDefault();
+    const { value } = e.target;
     value === UPDATE ? checkValidation(UPDATE) : checkValidation(CREATE);
   };
 

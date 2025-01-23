@@ -15,6 +15,7 @@ export const checkMedalValidation = (medals) => {
     if(value.length === 0) {
       isValid = false;
       errorMessage = `${getLabelName(key)}의 개수를 입력해 주세요.`;
+      return { isValid, errorMessage }
     }
 
     // 메달의 개수가 0이면 inValidMedals에 추가해서 다음 유효성 검사(아래)를 실행
@@ -36,14 +37,14 @@ export const checkMedalValidation = (medals) => {
 export const checkCountryNameValidation = (originList, addedTarget, type) => {
   let isValid = true;
   let errorMessage = null;
-
   const { country } = addedTarget;
   // 국가명을 입력지 않았는지 확인
   if(removeAllBlank(country).length === 0) {
     isValid = false;
     errorMessage = '국가명을 입력해 주세요.'
-  }
- 
+    return { isValid, errorMessage };
+  } 
+
   // 이미 추가된 국가인지 확인
   const hasOriginList = originList.findIndex((list) => list.country === country) !== -1; 
 

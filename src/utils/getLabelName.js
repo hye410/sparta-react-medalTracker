@@ -1,5 +1,6 @@
 import { INPUT_VALUES } from "../constant/constant";
 
+// value를 받아 해당 value에 해당하는 메달 이름을 반환하는 함수
 const { COUNTRY,GOLD,SILVER,BRONZE } = INPUT_VALUES;
 export const getLabelName = (key) => {
   switch (key) {

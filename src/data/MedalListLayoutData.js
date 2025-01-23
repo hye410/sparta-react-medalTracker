@@ -2,7 +2,9 @@ import { INPUT_VALUES } from "../constant/constant";
 
 const { COUNTRY, GOLD, SILVER, BRONZE } = INPUT_VALUES;
 
-export const tableHead = [COUNTRY.name,GOLD.name,SILVER.name,BRONZE.name,'총 합','액션'];
+
+export const tableHead = [COUNTRY.name,GOLD.name,SILVER.name,BRONZE.name,'합계','액션'];
+
 
 export const sortList = [
   {
@@ -22,7 +24,7 @@ export const sortList = [
     value : BRONZE.value
   },
   {
-    text : '총 합계 순',
+    text : '합계 순',
     value : 'sum'
   }
 ]

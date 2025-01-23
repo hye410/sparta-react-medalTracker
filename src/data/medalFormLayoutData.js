@@ -40,7 +40,7 @@ export const inputData = (data,changeFunc) => [
 
 export const buttonData = (clickFunc) => [
   {
-    buttonName : "국가추가",
+    buttonName : "국가 추가",
     type : "submit",
     value : CREATE,
     customeStyle : {

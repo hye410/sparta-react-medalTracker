@@ -2,15 +2,17 @@ import React, { useState } from 'react'
 import Table from '../components/Table';
 import MedalsRowByCountry from '../components/MedalsRowByCountry';
 import Sorting from '../components/Sorting';
-import { sortList, tableHead } from '../data/MedalListLayoutData';
+import { sortList, tableHead } from '../data/medalListLayoutData';
+import { INPUT_VALUES } from '../constant/constant';
+
+const { COUNTRY } = INPUT_VALUES;
 
 function MedalList({medalList, setMedalList}) {
-
   const [sortBy, setSortBy] = useState(sortList[0].value);
 
   const sorting = (list) => {
     return [...list].sort((a,b) => {
-      if(sortBy === 'country') return a[sortBy].localeCompare(b[sortBy]);
+      if(sortBy === COUNTRY.value) return a[sortBy].localeCompare(b[sortBy]);
       else return b[sortBy] - a[sortBy];
     })
   };
