@@ -1,5 +1,5 @@
 <div style= "text-align:center">
-    <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&height=120&text=Olympic%20Medal%20Tracker&animation=fadeIn&fontColor=ffffff&fontSize=70" />
+    <img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&height=120&text=Olympic%20Medals%20Tracker&animation=fadeIn&fontColor=ffffff&fontSize=70" />
 </div>
 <div style= "text-align:left">
   <h2>🏋️‍♀️ About This Project</h2> <br>
@@ -28,9 +28,8 @@
 <div style= "text-align:left">
   <h2>🏌️‍♀️ TroubleShooting</h2> <br>
     <ul>
-      <li><a>1</a></li>
-      <li><a>2</a></li>
-      <li><a>3</a></li>
+      <li><a href="https://dhye410.tistory.com/24">submit을 눌렀더니 다 사라져버렸네?!!</a></li>
+      <li><a href="https://dhye410.tistory.com/25">국가명으로 정렬을 해야하는데...</a></li>
     </ul>
   <br />
 </div>

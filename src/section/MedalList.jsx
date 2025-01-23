@@ -12,7 +12,7 @@ function MedalList({medalList, setMedalList}) {
 
   const sorting = (list) => {
     return [...list].sort((a,b) => {
-      if(sortBy === COUNTRY.value) return a[sortBy].localeCompare(b[sortBy]);
+      if(sortBy === COUNTRY.value) return a[sortBy].localeCompare(b[sortBy],'ko');
       else return b[sortBy] - a[sortBy];
     })
   };
