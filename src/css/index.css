@@ -69,6 +69,7 @@ header {
     padding : 8px 5px;
     border : 2px solid #eaeaea;
     width:80%;
+    border-radius: 5px;
   }
 
   .medalForm > button {
@@ -80,6 +81,7 @@ header {
     border : none;
     width: 10%;
     min-width: 77px;
+    border-radius: 5px;
   }
 
   .medalForm > button:hover {
@@ -87,6 +89,9 @@ header {
   }
 
   @media screen and (max-width:840px) {
+    header {
+      margin-bottom : 0
+    }
     .medalForm {
       display: block;
       text-align: center;
@@ -121,6 +126,7 @@ header {
     padding : 5px 10px;
     border : 1px solid #cbcbcb;
     cursor: pointer;
+    border-radius: 5px;
   }
 
   #medalList > table {

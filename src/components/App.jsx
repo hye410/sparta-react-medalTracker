@@ -16,15 +16,18 @@ function App() {
       </header>
       <section id="medalSection">
         {/* -------사용자 input 입력 영역-------- */}
-        <MedalForm 
-        medalList={medalList}
-        setMedalList={setMedalList}
-        />
+          <MedalForm 
+          medalList={medalList}
+          setMedalList={setMedalList}
+          />
         {/* -------메달 리스트 테이블 영역-------- */}
         {
           medalList.length === 0 ?
             <EmptyMedalList />
-          : <MedalList medalList={medalList} setMedalList={setMedalList} />
+          : <MedalList 
+              medalList={medalList} 
+              setMedalList={setMedalList} 
+            />
         }
     
       </section>
